@@ -3,15 +3,15 @@
 
 **Table of Contents**
 
-Project Overview
+**Project Overview**
 
 This project demonstrates how to build, deploy, and manage a simple Node.js web application using Docker and Jenkins. The application is dockerized and deployed using Jenkins pipelines to ensure a seamless continuous deployment workflow.
 
-1. NodeJs WebApplication Development
+**1. NodeJs WebApplication Development
 
 2. Dockerizing the Application
 
-3. Setting Up the EC2 Instance
+3. Setting Up the EC2 Instance**
 
 sudo apt update
 sudo apt install openjdk-8-jdk -y
@@ -43,7 +43,7 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 Install suggested plugins 
 
 
-4. Jenkins Setup
+4. **Jenkins Setup**
 
 5. Required Jenkins Plugins
 
@@ -77,8 +77,8 @@ Password: Your Docker Hub password
 ID: docker (used in Jenkins Pipeline)
 
 
-8. Pipeline Script
-
+8. **Pipeline Script
+**
 pipeline {
     agent any
 
