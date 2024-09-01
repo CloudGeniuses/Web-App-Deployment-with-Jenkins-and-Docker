@@ -77,8 +77,8 @@ Password: Your Docker Hub password
 ID: docker (used in Jenkins Pipeline)
 
 
-8. **Pipeline Script
-**
+8. Pipeline Script
+
 pipeline {
     agent any
 
