@@ -16,6 +16,13 @@ This project demonstrates how to build, deploy, and manage a simple Node.js web 
 sudo apt update
 sudo apt install openjdk-8-jdk -y
 sudo apt install openjdk-11-jdk -y
+sudo usermod -aG docker jenkins
+sudo apt install docker -y
+ls -l /var/run/docker.sock
+sudo chmod 777 /var/run/docker.sock
+sudo systemctl status docker
+
+
 
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
     /usr/share/keyrings/jenkins-keyring.asc > /dev/null
