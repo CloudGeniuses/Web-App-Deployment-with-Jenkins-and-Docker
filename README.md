@@ -1,7 +1,8 @@
 # Web-App-Deployment-with-Jenkins-and-Docker
 
 
-Table of Contents
+**Table of Contents**
+
 Project Overview
 Dockerizing the Application
 Setting Up the EC2 Instance
