@@ -31,17 +31,98 @@ sudo systemctl status jenkins
 
 ![alt text](image.png)
 
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Install suggested plugins 
+
 
 4. Jenkins Setup
 
 5. Required Jenkins Plugins
 
+Pipeline Plugin
+Docker Commons Plugin
+Docker Pipeline Plugin
+Docker Plugin
+Pipeline: Basic Steps Plugin
+
 6. Tool Configuration
+
+Configure Docker Tool
+
+Go to Manage Jenkins → Global Tool Configuration.
+Scroll down to Docker.
+Click Add Docker.
+Name the Docker installation (e.g., docker).
+Save the configuration.
+
+
 
 7. Credentials Setup
 
+Add Docker Credentials
+
+Go to Manage Jenkins → Manage Credentials.
+Add Docker Hub credentials:
+Kind: Username with password
+Username: Your Docker Hub username
+Password: Your Docker Hub password
+ID: docker (used in Jenkins Pipeline)
+
+
 8. Pipeline Script
 
-9. Deployment and Access
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE_NAME = 'cloudgeniuslab/cloudgenius:simple-web-app'
+        DOCKER_CONTAINER_NAME = 'simple-web-app-container'
+        PORT = '3000'
+        DOCKER_CREDENTIALS_ID = 'docker' // Replace with your credentials ID
+    }
+
+    stages {
+        stage('Pull Docker Image') {
+            steps {
+                script {
+                    // Log in to Docker Hub if credentials are required
+                    withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh """
+                            echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+                        """
+                    }
+                    
+                    // Pull the Docker image from Docker Hub
+                    sh "docker pull ${DOCKER_IMAGE_NAME}"
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Stop and remove any existing container with the same name
+                    sh "docker rm -f ${DOCKER_CONTAINER_NAME} || true"
+
+                    // Run the new container
+                    sh "docker run -d -p ${PORT}:${PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up Docker images and containers
+            sh "docker system prune -f --volumes"
+        }
+    }
+}
+
+
+
+
+9. Build (Deployment and Access)
 
 10. Troubleshooting
